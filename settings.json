@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(go test:*)",
+      "Bash(go build:*)",
+      "WebFetch(domain:hyperliquid.gitbook.io)",
+      "Bash(mkdir:*)",
+      "Bash(make:*)",
+      "Bash(go vet:*)",
+      "Bash(go mod:*)",
+      "Bash(xargs:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "defaultMode": "plan"
+  },
+  "model": "opusplan",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/anthony/.claude/hooks/block-sensitive-files.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/home/anthony/.ccs/hooks/websearch-transformer.cjs\"",
+            "timeout": 85
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "outputStyle": "Explanatory",
+  "alwaysThinkingEnabled": true,
+  "feedbackSurveyState": {
+    "lastShownTime": 1754085286445
+  }
+}
